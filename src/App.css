@@ -1,0 +1,23 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.temperature {
+    box-sizing: border-box;
+    border-radius: 16px;
+    background-color: rgb(247, 248, 249);
+    border-bottom-color: rgb(242, 244, 250);
+    margin: 12px auto;
+    max-width: 1000px;
+    padding: 24px 32px;
+}
+
+.temperature-title {
+    text-align: center;
+    padding-bottom: 12px;
+}
