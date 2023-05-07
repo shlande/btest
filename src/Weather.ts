@@ -66,8 +66,11 @@ export class QWeather implements Provider {
     this.args.key = key;
   }
 
-  getIndices = async  (location: Location): Promise<string>  => {
-    const data = await fetch(QWeather.indicesAPIUrl + "?" + new URLSearchParams({location: location.id, type: "1,2", ...this.args}))
+  getIndices = async (location: Location): Promise<string> => {
+    const data = await fetch(QWeather.indicesAPIUrl + "?" + new URLSearchParams({
+      location: location.id,
+      type: "1,2", ...this.args
+    }))
       .then(res => res.json())
     if (data.code != "200") {
       return Promise.reject("无法获取信息")
@@ -120,7 +123,7 @@ export class QWeather implements Provider {
     data.daily.forEach(item => {
       res.push({
         humidity: Number(item.humidity),
-        temperature: (Number(item.tempMax) + Number(item.tempMin) / 2),
+        temperature: (Number(item.tempMax) + Number(item.tempMin)) / 2,
         time: new Date(item.fxDate),
         weather: item.textDay,
       })
