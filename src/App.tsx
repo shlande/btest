@@ -26,7 +26,7 @@ const current: Data = {
   name: "未知",
   detail: [],
   advice: "",
-  condition: "AQI 优",
+  condition: "空气质量未知",
   country: "未知", province: "未知", temperature: 23, weather: "晴"
 }
 
@@ -63,17 +63,20 @@ function App() {
       const data_ = {...data, ...res} as Data
       // setData(data_)
       return {res,data_}
-    }).then(({res,data_: data}) => {
+    }).then(({res:location,data_: data}) => {
       Promise.all([
-        // 获取到温度，直接根系温度
-        provider.getWeather(res).then(res => {
+        provider.getWeather(location).then(res => {
           data = {...data,temperature:res[0].temperature, weather: res[0].weather}
           setData(data)
           setTemp(res)
         }),
         // 获取到空气质量，更新data
-        provider.getAir(res).then(res => {
-          data = {...data,detail: generateDetail(res)}
+        provider.getAir(location).then(res => {
+          data = {...data,detail: generateDetail(res),condition: "空气质量" + res.category}
+          setData(data)
+        }),
+        provider.getIndices(location).then(res => {
+          data = {...data, advice: res}
           setData(data)
         })
       ])
