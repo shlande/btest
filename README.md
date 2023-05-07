@@ -13,7 +13,7 @@ git clone https://github.com/shlande/btest.git
 注册账号并生成APIKEY，在`btest`目录下创建`.env`文件
 ```text
 # .env
-VITE_QWKEY=<PUT YOU KEY HERE>
+VITE_QWKEY=<PUT YOUR KEY HERE>
 ```
 安装依赖并运行
 ```shell
