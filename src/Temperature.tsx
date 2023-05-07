@@ -1,8 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Chart} from "chart.js/auto";
 
-let chart: Chart
-
 export type Prop = {
   time: Date
   temperature: number
@@ -33,10 +31,11 @@ const generateHumidity = (data: Prop[]) => {
   return result
 }
 
+let chart:Chart
 export default (props: { data: Prop[] }) => {
-
   const temperature = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
+    chart && chart.destroy()
     chart = new Chart(temperature.current!, {
       type: "line",
       options: {
@@ -81,14 +80,10 @@ export default (props: { data: Prop[] }) => {
         }]
       }
     })
-    console.log("创建chart")
     return () => {
-      console.log("清理chart")
-      chart.destroy();
+      chart && chart.destroy();
     }
-  }, [])
-
-
+  }, [props.data])
   return (
     <canvas ref={temperature} id={"temperature"}>
     </canvas>

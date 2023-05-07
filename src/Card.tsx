@@ -1,14 +1,14 @@
-import { ReactElement} from "react"
+import {ReactElement} from "react"
 import "./Card.css"
+import _default from "chart.js/dist/core/core.interaction";
 
 export type Data = {
-  location: string,
   country: string,
   province: string
-  region: string
+  name: string
   condition: string
-  temperature: string
-  weather: "阴" | "晴" | "雨" | "雪"
+  temperature: number
+  weather: string
   advice: string
   detail: {
     title: string
@@ -24,24 +24,26 @@ const formatInt = (num: number): string => {
   return ("0" + num).slice(-2)
 }
 
-const generateWeatherImg = (weather: Data["weather"]) => {
-  switch (weather) {
-    case "晴":
-      return "/100.png"
-    case "阴":
-      return "/101.png"
-    case "雨":
-      return "/305.png"
-    case "雪":
-      return "/101.png"
+const generateWeatherImg = (weather: string) => {
+  if (weather.includes("晴")) {
+    return "/100.png"
+  }
+  if (weather.includes("阴")) {
+    return "/101.png"
+  }
+  if (weather.includes("雨")) {
+    return "/305.png"
+  }
+  if (weather.includes("雪")) {
+    return "/101.png"
   }
 }
 
 export default (props: { data: Data }) => {
-  const {region, province, country, condition, temperature, weather, advice, detail} = props.data
-
+  const {name, province, country, condition, temperature, weather, advice, detail} = props.data
+  // console.log("重置data",props.data)
   const Detail: ReactElement[] = []
-  detail && detail.forEach((item,index) => {
+  detail && detail.forEach((item, index) => {
     Detail.push(<div key={index} className={"current-basic-item"}>
       <p className={"title"}>{item.title}</p>
       <p className={"content"}>{item.value}</p>
@@ -50,7 +52,7 @@ export default (props: { data: Data }) => {
   return <div className="current-weather">
     <div className="location">
       <div>
-        <h1 className={"content"}>{region}</h1>
+        <h1 className={"content"}>{name}</h1>
         <span className={"mini"}>{province}/{country}</span>
       </div>
       <p className="mini">{formatDate(new Date())}</p>
