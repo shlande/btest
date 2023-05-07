@@ -41,6 +41,14 @@ export interface Provider {
   getWeather(location: Location): Promise<TimeWeather[]>
 }
 
+let provider:Provider
+export const getProvider = ():Provider  => {
+  if (provider == null) {
+    console.log(import.meta.env.QWKEY)
+    provider = new QWeather(import.meta.env.QWKEY)
+  }
+  return provider
+}
 export class QWeather implements Provider {
   private static weatherAPIUrl = "https://devapi.qweather.com/v7/weather/7d"
   private static geoAPIUrl = "https://geoapi.qweather.com/v2/city/lookup"
